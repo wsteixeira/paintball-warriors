@@ -1,19 +1,47 @@
 <div class="user-table">
   <div class="user-button-container">
-    <button mat-raised-button (click)="addData()" class="user-button">
-      Add data
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onAddUser()"
+      class="user-button"
+    >
+      Adicionar
     </button>
     <button
       mat-raised-button
-      [disabled]="!dataSource.length"
-      (click)="removeData()"
+      color="warn"
+      [disabled]="selection.isEmpty()"
+      (click)="onRemoveUser()"
       class="user-button"
     >
-      Remove data
+      Remover
     </button>
   </div>
 
   <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? toggleAllRows() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          [aria-label]="checkboxLabel()"
+        >
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+          [aria-label]="checkboxLabel(row)"
+        >
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
@@ -22,13 +50,13 @@
 
     <!-- Fist Name Column -->
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.firstName }}</mat-cell>
     </ng-container>
 
     <!-- Last Name Column -->
     <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Sobrenome</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.lastName }}</mat-cell>
     </ng-container>
 

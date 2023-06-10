@@ -1,5 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatTable } from '@angular/material/table';
+
 import { UserService } from '../user.service';
 import { User } from '../user.model';
 
@@ -9,38 +12,70 @@ import { User } from '../user.model';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email'];
-  dataInitial: User[] = [];
-  dataSource: User[] = [];
-
   @ViewChild(MatTable) table!: MatTable<User>;
 
-  constructor(private service: UserService) {}
+  displayedColumns: string[] = [
+    'select',
+    'id',
+    'firstName',
+    'lastName',
+    'email',
+  ];
+  dataSource: User[] = [];
+
+  selection = new SelectionModel<User>(true, []);
+
+  constructor(private service: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    this.service.getResources().subscribe((users) => {
-      this.dataInitial = users;
-      this.dataSource = users;
-    });
+    this.service.getResources().subscribe((users) => (this.dataSource = users));
   }
 
-  addData() {
-    const randomIndex = Math.floor(Math.random() * this.dataInitial.length);
-    const newUser = this.dataInitial[randomIndex];
-
-    newUser.id = 0;
-    this.service.createResource(newUser).subscribe((user) => {
-      this.dataSource.push(user);
-      this.table.renderRows();
-    });
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.length;
+    return numSelected === numRows;
   }
 
-  removeData() {
-    const delData: User = this.dataSource[this.dataSource.length - 1];
-    this.service.deleteResource(delData.id).subscribe((x) => {
-      console.log(x);
-      this.dataSource = this.dataSource.filter((user) => user != delData);
-      this.table.renderRows();
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: User): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.id + 1
+    }`;
+  }
+
+  onAddUser() {
+    this.router.navigate(['/user/new']);
+  }
+
+  onRemoveUser() {
+    this.removeUsers(this.selection.selected);
+  }
+
+  removeUsers(users: User[]) {
+    this.service.deleteResource(users[0].id).subscribe(() => {
+      this.dataSource = this.dataSource.filter((user) => user != users[0]);
+      users.shift();
+      if (users.length) {
+        this.removeUsers(users);
+      } else {
+        this.selection.clear();
+        this.table.renderRows();
+      }
     });
   }
 }
