@@ -24,6 +24,10 @@ export class UserService {
     return this.http.get<User[]>(this.endpoint);
   }
 
+  getResource(id: number): Observable<User> {
+    return this.http.get<User>(`${this.endpoint}/${id}`);
+  }
+
   updateResource(id: number, resource: User): Observable<User> {
     return this.http.put<User>(`${this.endpoint}/${id}`, resource);
   }

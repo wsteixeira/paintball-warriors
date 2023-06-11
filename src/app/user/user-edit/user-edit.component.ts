@@ -1,16 +1,18 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user.service';
-import { User } from '../user.model';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss'],
 })
-export class UserEditComponent {
+export class UserEditComponent implements OnInit {
+  title = 'Incluir Usuário';
+
   form = this.formBuilder.group({
     id: [0],
     firstName: ['', [Validators.required]],
@@ -21,8 +23,20 @@ export class UserEditComponent {
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private service: UserService
+    private service: UserService,
+    private route: ActivatedRoute
   ) {}
+
+  ngOnInit(): void {
+    const { id } = this.route.snapshot.params;
+
+    if (id) {
+      this.title = 'Editar Usuário';
+      this.service
+        .getResource(id)
+        .subscribe((user) => this.form.setValue(user));
+    }
+  }
 
   getErrorMessage(fieldName: string) {
     const field = this.form.get(fieldName);

@@ -20,6 +20,7 @@ export class UserListComponent implements OnInit {
     'firstName',
     'lastName',
     'email',
+    'actions',
   ];
   dataSource: User[] = [];
 
@@ -62,7 +63,19 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['/user/new']);
   }
 
-  onRemoveUser() {
+  onEditUser(user: User) {
+    this.router.navigate([`/user/edit/${user.id}`]);
+  }
+
+  onRemoveUser(user: User) {
+    this.service.deleteResource(user.id).subscribe(() => {
+      this.dataSource = this.dataSource.filter((data) => data != user);
+      this.selection.clear();
+      this.table.renderRows();
+    });
+  }
+
+  onRemoveUsers() {
     this.removeUsers(this.selection.selected);
   }
 
