@@ -76,18 +76,17 @@ export class UserListComponent implements OnInit {
   }
 
   onRemoveUsers() {
-    this.removeUsers(this.selection.selected);
-  }
+    const user: User = this.selection.selected[0];
 
-  removeUsers(users: User[]) {
-    this.service.deleteResource(users[0].id).subscribe(() => {
-      this.dataSource = this.dataSource.filter((user) => user != users[0]);
-      users.shift();
-      if (users.length) {
-        this.removeUsers(users);
+    this.service.deleteResource(user.id).subscribe(() => {
+      this.dataSource = this.dataSource.filter((data) => data != user);
+      this.selection.selected.shift();
+      if (this.selection.selected.length) {
+        setTimeout(() => {
+          this.onRemoveUsers();
+        }, 200);
       } else {
         this.selection.clear();
-        this.table.renderRows();
       }
     });
   }

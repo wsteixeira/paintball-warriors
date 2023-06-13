@@ -12,6 +12,7 @@ import { UserService } from '../user.service';
 })
 export class UserEditComponent implements OnInit {
   title = 'Incluir Usuário';
+  update = false;
 
   form = this.formBuilder.group({
     id: [0],
@@ -32,6 +33,7 @@ export class UserEditComponent implements OnInit {
 
     if (id) {
       this.title = 'Editar Usuário';
+      this.update = true;
       this.service
         .getResource(id)
         .subscribe((user) => this.form.setValue(user));
@@ -58,6 +60,12 @@ export class UserEditComponent implements OnInit {
   onSave() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user: any = this.form.value;
-    this.service.createResource(user).subscribe(() => this.location.back());
+    if (this.update) {
+      this.service
+        .updateResource(user.id, user)
+        .subscribe(() => this.location.back());
+    } else {
+      this.service.createResource(user).subscribe(() => this.location.back());
+    }
   }
 }
