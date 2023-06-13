@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { UserListComponent } from './user/user-list/user-list.component';
+import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 
 const routes: Routes = [
+  { path: 'customer', component: CustomerListComponent },
   { path: 'user', component: UserListComponent },
   { path: 'user/edit/:id', component: UserEditComponent },
   { path: 'user/new', component: UserEditComponent },
-  { path: '**', redirectTo: '/user', pathMatch: 'full' },
+  { path: '**', redirectTo: '/customer', pathMatch: 'full' },
 ];
 
 @NgModule({
