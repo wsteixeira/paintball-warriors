@@ -1,6 +1,8 @@
 export interface Customer {
   id: number;
   name: string;
-  weight: number;
+  city: string;
+  state: string;
+  federalId: string;
   email: string;
 }

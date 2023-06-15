@@ -3,47 +3,102 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="addData()"
+      (click)="onAddCustomer()"
       class="table-button"
     >
       Adicionar
     </button>
     <button
       mat-raised-button
-      [disabled]="!dataSource.length"
-      (click)="removeData()"
+      [disabled]="selection.isEmpty()"
+      (click)="onRemoveCustomers()"
       class="table-button"
     >
       Remover
     </button>
   </div>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? toggleAllRows() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          [aria-label]="checkboxLabel()"
+        >
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+          [aria-label]="checkboxLabel(row)"
+        >
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
     </ng-container>
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef>Weight</th>
-      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+    <!-- City Column -->
+    <ng-container matColumnDef="city">
+      <mat-header-cell *matHeaderCellDef>Cidade</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.city }}</mat-cell>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- State Column -->
+    <ng-container matColumnDef="state">
+      <mat-header-cell *matHeaderCellDef>UF</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.state }}</mat-cell>
+    </ng-container>
+
+    <!-- Federal Id Column -->
+    <ng-container matColumnDef="federalId">
+      <mat-header-cell *matHeaderCellDef>CPF</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.federalId }}</mat-cell>
+    </ng-container>
+
+    <!-- Email Column -->
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="table-action-column">
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="table-action-column">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Ações">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onEditCustomer(element)">
+            <mat-icon>edit</mat-icon>
+            <span>Editar</span>
+          </button>
+          <button mat-menu-item (click)="onRemoveCustomer(element)">
+            <mat-icon>delete</mat-icon>
+            <span>Excluir</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
 </div>

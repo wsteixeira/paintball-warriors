@@ -62,15 +62,93 @@
     }
   ],
   "customers": [
-    { "id": 1, "name": "Hydrogen", "weight": 1.0079, "symbol": "H" },
-    { "id": 2, "name": "Helium", "weight": 4.0026, "symbol": "He" },
-    { "id": 3, "name": "Lithium", "weight": 6.941, "symbol": "Li" },
-    { "id": 4, "name": "Beryllium", "weight": 9.0122, "symbol": "Be" },
-    { "id": 5, "name": "Boron", "weight": 10.811, "symbol": "B" },
-    { "id": 6, "name": "Carbon", "weight": 12.0107, "symbol": "C" },
-    { "id": 7, "name": "Nitrogen", "weight": 14.0067, "symbol": "N" },
-    { "id": 8, "name": "Oxygen", "weight": 15.9994, "symbol": "O" },
-    { "id": 9, "name": "Fluorine", "weight": 18.9984, "symbol": "F" },
-    { "id": 10, "name": "Neon", "weight": 20.1797, "symbol": "Ne" }
+    {
+      "id": 1,
+      "name": "Paulo Carvalho",
+      "city": "São Paulo",
+      "state": "SP",
+      "federalId": "",
+      "email": "paulo.carvalho@mail.com"
+    },
+    {
+      "id": 2,
+      "name": "Maria Soares",
+      "city": "Belo Horizente",
+      "state": "MG",
+      "federalId": "",
+      "email": "maria.soares@mail.com"
+    },
+    {
+      "id": 3,
+      "name": "Pedro Machado",
+      "city": "São Paulo",
+      "state": "SP",
+      "federalId": "",
+      "email": "pedro.machado@mail.com"
+    },
+    {
+      "id": 4,
+      "name": "Sonia Ferreira",
+      "city": "Belo Horizente",
+      "state": "MG",
+      "federalId": "",
+      "email": "sonia.ferreira@mail.com"
+    },
+    {
+      "id": 5,
+      "name": "Carlos Silva",
+      "city": "São Paulo",
+      "state": "SP",
+      "federalId": "",
+      "email": "carlos.silva@mail.com"
+    },
+    {
+      "id": 6,
+      "name": "Silvia Oliveira",
+      "city": "Belo Horizente",
+      "state": "MG",
+      "federalId": "",
+      "email": "silvia.oliveira@mail.com"
+    },
+    {
+      "id": 7,
+      "name": "Elaine Silverio",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "federalId": "",
+      "email": "elaine.silverio@mail.com"
+    },
+    {
+      "id": 8,
+      "name": "José Teixeira",
+      "city": "Vitória",
+      "state": "ES",
+      "federalId": "",
+      "email": "jose.teixeira@mail.com"
+    },
+    {
+      "id": 9,
+      "name": "Marcio Fonceca",
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "federalId": "",
+      "email": "marcio.fonceca@mail.com"
+    },
+    {
+      "id": 10,
+      "name": "Viviane Pereira",
+      "city": "Vitória",
+      "state": "ES",
+      "federalId": "",
+      "email": "viviane.pereira@mail.com"
+    },
+    {
+      "id": 11,
+      "name": "Viviane Pereira",
+      "city": "Vitória",
+      "state": "ES",
+      "federalId": "",
+      "email": "viviane.pereira@mail.com"
+    }
   ]
 }

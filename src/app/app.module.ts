@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
+import { CustomerEditComponent } from './customer/customer-edit/customer-edit.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CustomerListComponent } from './customer/customer-list/customer-list.co
     UserEditComponent,
     UserListComponent,
     CustomerListComponent,
+    CustomerEditComponent,
   ],
   imports: [
     BrowserModule,

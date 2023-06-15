@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+
 import { MatTable } from '@angular/material/table';
 
 import { UserService } from '../user.service';
@@ -22,8 +23,8 @@ export class UserListComponent implements OnInit {
     'email',
     'actions',
   ];
-  dataSource: User[] = [];
 
+  dataSource: User[] = [];
   selection = new SelectionModel<User>(true, []);
 
   constructor(private service: UserService, private router: Router) {}
