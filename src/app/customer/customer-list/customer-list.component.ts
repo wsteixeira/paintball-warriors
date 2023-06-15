@@ -1,4 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { MatTable } from '@angular/material/table';
 
 import { CustomerService } from '../customer.service';
@@ -10,13 +12,13 @@ import { Customer } from '../customer.model';
   styleUrls: ['./customer-list.component.scss'],
 })
 export class CustomerListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['id', 'name', 'weight', 'email'];
   dataCustomers!: Customer[];
   dataSource: Customer[] = [];
 
   @ViewChild(MatTable) table!: MatTable<Customer>;
 
-  constructor(private service: CustomerService) {}
+  constructor(private service: CustomerService, private router: Router) {}
 
   ngOnInit(): void {
     this.service.getResources().subscribe((customers: Customer[]) => {
@@ -33,7 +35,6 @@ export class CustomerListComponent implements OnInit {
     const customer: Customer = this.dataCustomers[randomElementIndex];
     customer.id = 0;
     this.service.createResource(customer).subscribe((resp) => {
-      console.log(resp);
       this.dataSource.push(resp);
       this.table.renderRows();
     });

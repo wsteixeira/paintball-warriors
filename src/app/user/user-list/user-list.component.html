@@ -1,10 +1,10 @@
-<div class="user-table">
-  <div class="user-button-container">
+<div class="table-list">
+  <div class="table-button-container">
     <button
       mat-raised-button
       color="primary"
       (click)="onAddUser()"
-      class="user-button"
+      class="table-button"
     >
       Adicionar
     </button>
@@ -13,7 +13,7 @@
       color="warn"
       [disabled]="selection.isEmpty()"
       (click)="onRemoveUsers()"
-      class="user-button"
+      class="table-button"
     >
       Remover
     </button>
@@ -68,9 +68,9 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef class="action-column">
+      <mat-header-cell *matHeaderCellDef class="table-action-column">
       </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="action-column">
+      <mat-cell *matCellDef="let element" class="table-action-column">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Ações">
           <mat-icon>more_vert</mat-icon>
         </button>

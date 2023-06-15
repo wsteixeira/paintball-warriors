@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Paintball Warriors';
+
+  constructor(private router: Router) {}
+
+  onCustomers() {
+    this.router.navigate(['customer']);
+  }
+  onUsers() {
+    this.router.navigate(['user']);
+  }
 }
