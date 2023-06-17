@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './user.model';
+import { ResponseUsers, User } from './user.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,8 +20,8 @@ export class UserService {
     return this.http.delete(`${this.endpoint}/${id}`);
   }
 
-  getResources(): Observable<User[]> {
-    return this.http.get<User[]>(this.endpoint);
+  getResources(params?: HttpParams): Observable<ResponseUsers> {
+    return this.http.get<ResponseUsers>(this.endpoint, { params });
   }
 
   getResource(id: number): Observable<User> {

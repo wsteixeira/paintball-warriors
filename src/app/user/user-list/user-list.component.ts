@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
 
 import { UserService } from '../user.service';
@@ -14,6 +15,7 @@ import { User } from '../user.model';
 })
 export class UserListComponent implements OnInit {
   @ViewChild(MatTable) table!: MatTable<User>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [
     'select',
@@ -27,10 +29,23 @@ export class UserListComponent implements OnInit {
   dataSource: User[] = [];
   selection = new SelectionModel<User>(true, []);
 
+  showPageSizeOptions = true;
+  pageSizeOptions = [5, 10, 25];
+
   constructor(private service: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    this.service.getResources().subscribe((users) => (this.dataSource = users));
+    this.loadPage(1, this.pageSizeOptions[0]);
+  }
+
+  loadPage(page?: number, pageSize?: number) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const params: any = { page: page, pageSize: pageSize };
+
+    this.service.getResources(params).subscribe((resp) => {
+      this.dataSource = resp.items;
+      this.paginator.length = resp.total || 0;
+    });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -90,5 +105,9 @@ export class UserListComponent implements OnInit {
         this.selection.clear();
       }
     });
+  }
+
+  onPage() {
+    this.loadPage(this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 }

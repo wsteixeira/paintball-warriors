@@ -6,6 +6,7 @@ import { MatTable } from '@angular/material/table';
 
 import { CustomerService } from '../customer.service';
 import { Customer } from '../customer.model';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-customer-list',
@@ -14,6 +15,7 @@ import { Customer } from '../customer.model';
 })
 export class CustomerListComponent implements OnInit {
   @ViewChild(MatTable) table!: MatTable<Customer>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [
     'select',
@@ -29,12 +31,23 @@ export class CustomerListComponent implements OnInit {
   dataSource: Customer[] = [];
   selection = new SelectionModel<Customer>(true, []);
 
+  showPageSizeOptions = true;
+  pageSizeOptions = [5, 10, 25];
+
   constructor(private service: CustomerService, private router: Router) {}
 
   ngOnInit(): void {
-    this.service
-      .getResources()
-      .subscribe((customers: Customer[]) => (this.dataSource = customers));
+    this.loadPage(1, this.pageSizeOptions[0]);
+  }
+
+  loadPage(page?: number, pageSize?: number) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const params: any = { page: page, pageSize: pageSize };
+
+    this.service.getResources(params).subscribe((resp) => {
+      this.dataSource = resp.items;
+      this.paginator.length = resp.total || 0;
+    });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -94,5 +107,9 @@ export class CustomerListComponent implements OnInit {
         this.selection.clear();
       }
     });
+  }
+
+  onPage() {
+    this.loadPage(this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 }

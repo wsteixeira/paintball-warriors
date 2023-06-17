@@ -101,4 +101,12 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
+  <mat-paginator
+    class="mat-elevation-z8"
+    (page)="onPage()"
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+    aria-label="Select page"
+  >
+  </mat-paginator>
 </div>

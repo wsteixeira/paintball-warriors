@@ -4,3 +4,9 @@ export interface User {
   lastName: string;
   email: string;
 }
+
+export interface ResponseUsers {
+  total?: number;
+  hasNext?: boolean;
+  items: User[];
+}

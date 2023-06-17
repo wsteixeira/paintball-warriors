@@ -6,3 +6,9 @@ export interface Customer {
   federalId: string;
   email: string;
 }
+
+export interface ResponseCustomers {
+  total?: number;
+  hasNext?: boolean;
+  items: Customer[];
+}

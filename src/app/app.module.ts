@@ -10,6 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -20,6 +24,7 @@ import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { CustomerListComponent } from './customer/customer-list/customer-list.component';
 import { CustomerEditComponent } from './customer/customer-edit/customer-edit.component';
+import { PaginatorIntl } from './paginator-intl.service';
 
 @NgModule({
   declarations: [
@@ -43,10 +48,11 @@ import { CustomerEditComponent } from './customer/customer-edit/customer-edit.co
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatPaginatorModule,
     MatTableModule,
     MatToolbarModule,
   ],
-  providers: [],
+  providers: [{ provide: MatPaginatorIntl, useClass: PaginatorIntl }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

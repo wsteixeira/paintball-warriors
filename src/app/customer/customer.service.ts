@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Customer } from './customer.model';
+import { Customer, ResponseCustomers } from './customer.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +22,8 @@ export class CustomerService {
     return this.http.delete(`${this.endpoint}/${id}`);
   }
 
-  getResources(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.endpoint);
+  getResources(params?: HttpParams): Observable<ResponseCustomers> {
+    return this.http.get<ResponseCustomers>(this.endpoint, { params });
   }
 
   getResource(id: number): Observable<Customer> {
