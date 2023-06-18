@@ -18,7 +18,11 @@
     </button>
   </div>
 
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <mat-table
+    *ngIf="!loading; else spinning"
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+  >
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
       <mat-header-cell *matHeaderCellDef>
@@ -101,6 +105,11 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
+  <ng-template #spinning>
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
   <mat-paginator
     class="mat-elevation-z8"
     (page)="onPage()"

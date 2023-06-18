@@ -13,6 +13,7 @@ import { CustomerService } from '../customer.service';
 export class CustomerEditComponent implements OnInit {
   title = 'Incluir Cliente';
   update = false;
+  loading = false;
 
   form = this.formBuilder.group({
     id: [0],
@@ -34,11 +35,13 @@ export class CustomerEditComponent implements OnInit {
     const { id } = this.route.snapshot.params;
 
     if (id) {
+      this.loading = true;
       this.title = 'Editar Cliente';
       this.update = true;
-      this.service
-        .getResource(id)
-        .subscribe((customer) => this.form.setValue(customer));
+      this.service.getResource(id).subscribe((customer) => {
+        this.form.setValue(customer);
+        this.loading = false;
+      });
     }
   }
 

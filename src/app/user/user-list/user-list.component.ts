@@ -27,6 +27,7 @@ export class UserListComponent implements OnInit {
   ];
 
   dataSource: User[] = [];
+  loading = false;
   selection = new SelectionModel<User>(true, []);
 
   showPageSizeOptions = true;
@@ -42,9 +43,12 @@ export class UserListComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const params: any = { page: page, pageSize: pageSize };
 
+    this.loading = true;
     this.service.getResources(params).subscribe((resp) => {
       this.dataSource = resp.items;
       this.paginator.length = resp.total || 0;
+      this.loading = false;
+      console.log(this.loading);
     });
   }
 

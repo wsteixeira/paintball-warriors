@@ -28,8 +28,9 @@ export class CustomerListComponent implements OnInit {
     'actions',
   ];
 
-  dataSource: Customer[] = [];
+  dataSource!: Customer[];
   selection = new SelectionModel<Customer>(true, []);
+  loading = false;
 
   showPageSizeOptions = true;
   pageSizeOptions = [5, 10, 25];
@@ -44,9 +45,11 @@ export class CustomerListComponent implements OnInit {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const params: any = { page: page, pageSize: pageSize };
 
+    this.loading = true;
     this.service.getResources(params).subscribe((resp) => {
       this.dataSource = resp.items;
       this.paginator.length = resp.total || 0;
+      this.loading = false;
     });
   }
 

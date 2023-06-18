@@ -3,7 +3,7 @@
     <mat-card-title>{{ title }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="form">
+    <form *ngIf="!loading; else spinning" [formGroup]="form">
       <!-- Fist Name Column -->
       <mat-form-field class="full-width">
         <mat-label>Nome</mat-label>
@@ -46,6 +46,11 @@
         }}</mat-error>
       </mat-form-field>
     </form>
+    <ng-template #spinning>
+      <div class="loading-spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-template>
   </mat-card-content>
   <mat-card-actions align="end">
     <button mat-raised-button color="warn" (click)="onCancel()">

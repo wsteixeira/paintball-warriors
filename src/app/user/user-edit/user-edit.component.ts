@@ -13,6 +13,7 @@ import { UserService } from '../user.service';
 export class UserEditComponent implements OnInit {
   title = 'Incluir Usuário';
   update = false;
+  loading = false;
 
   form = this.formBuilder.group({
     id: [0],
@@ -32,11 +33,13 @@ export class UserEditComponent implements OnInit {
     const { id } = this.route.snapshot.params;
 
     if (id) {
+      this.loading = true;
       this.title = 'Editar Usuário';
       this.update = true;
-      this.service
-        .getResource(id)
-        .subscribe((user) => this.form.setValue(user));
+      this.service.getResource(id).subscribe((user) => {
+        this.form.setValue(user);
+        this.loading = false;
+      });
     }
   }
 
